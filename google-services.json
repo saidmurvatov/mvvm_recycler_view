@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "1018238588001",
+    "firebase_url": "https://opstalent-help.firebaseio.com",
+    "project_id": "opstalent-help",
+    "storage_bucket": "opstalent-help.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1018238588001:android:3a07b5281902cf02",
+        "android_client_info": {
+          "package_name": "e.sigare.opstalenthelp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1018238588001-j1af4cri5mcq78oq55dstqq56a60fdvt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCT7owQYLMqZz_F_muH5Hd6hWi0qXoazoU"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

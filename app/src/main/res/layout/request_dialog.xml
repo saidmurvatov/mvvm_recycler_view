@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="32dp"
+    android:layout_marginEnd="32dp">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/title_text"
+        android:hint="Full Name"
+        android:inputType="textPersonName"
+        android:maxLines="1"
+        android:textColorHint="@color/OpsPink"
+        android:textColor="@color/OpsPink"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/content_text"
+        android:hint="Content"
+        android:maxLines="7"
+        android:textColorHint="@color/OpsPink"
+        android:textColor="@color/OpsPink"
+        android:layout_below="@+id/title_text"
+        android:layout_marginTop="16dp"
+        />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/button_shape"
+        android:text="Request"
+        android:textColor="@color/OpsPink"
+        android:layout_below="@+id/content_text"
+        android:layout_marginTop="32dp"/>
+
+</RelativeLayout>
