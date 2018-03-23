@@ -9,7 +9,6 @@ import kotlinx.android.synthetic.main.activity_tasks.*
 import e.sigare.opstalenthelp.Managers_Adapters.FirebaseService
 import e.sigare.opstalenthelp.Models.IModel
 import e.sigare.opstalenthelp.Models.Model
-import e.sigare.qaranqus.RecyclerViewAdapter
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 
