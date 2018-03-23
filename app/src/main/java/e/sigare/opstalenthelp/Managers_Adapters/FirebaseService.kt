@@ -3,18 +3,20 @@ package e.sigare.opstalenthelp.Managers_Adapters
 import android.app.Service
 import android.content.Context
 import android.content.Intent
-import android.os.Handler
+import android.databinding.ObservableField
 import android.os.IBinder
-import android.os.Message
 import android.util.Log
 import android.widget.Toast
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
-import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
+import e.sigare.opstalenthelp.Models.Model
+import io.reactivex.Observable
+import io.reactivex.Scheduler
 import org.greenrobot.eventbus.EventBus
+import java.util.*
 import javax.inject.Singleton
+import kotlin.collections.ArrayList
 
 
 /**
@@ -23,12 +25,15 @@ import javax.inject.Singleton
 @Singleton
 class FirebaseService : Service() {
 
+
+
     companion object {
         lateinit var instance: FirebaseService
     }
 
-
-    private lateinit var firebase: FirebaseFirestore
+    val ob: ObservableField<ArrayList<DocumentSnapshot>> = ObservableField(ArrayList<DocumentSnapshot>())
+    var observable: Observable<QuerySnapshot> = Observable.empty()
+    var firebase: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     override fun onBind(intent: Intent?): IBinder {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
@@ -36,41 +41,41 @@ class FirebaseService : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         Log.d("SERVICE", "SERVICE TURNED ON")
-        firebase = FirebaseFirestore.getInstance()
-        instance = this
+        instance = FirebaseService()
         return START_STICKY
     }
 
-    fun addNewRequest() {
+    fun addNewRequest(title: String, content: String) {
         val newContact = HashMap<String, Any>()
 
-        newContact.put("Name", "Said Murvatov")
-        newContact.put("Content", "lALALALALALAALALALlalalalalalala")
+        newContact["Name"] = title
+        newContact["Content"] = content
+        newContact["Done"] = false
 
-        firebase.collection("Request").document("I9NQ9Jw58Ly7E3kZM2nH").set(newContact)
-                .addOnCompleteListener { showToast("new Object added", this) }
-                .addOnFailureListener { showToast("new Object wasn't added", this) }
+        firebase.collection("Request").add(newContact)
+                .addOnCompleteListener { Log.d("Request", "Added")}
+                .addOnFailureListener { Log.d("Request", "not added") }
     }
 
-    fun showToast(message: String, context: Context) {
+    private fun showToast(message: String, context: Context) {
         Toast.makeText(context, message, Toast.LENGTH_LONG).show()
     }
 
-    fun getRequest() {
-        firebase.collection("Request").document("I9NQ9Jw58Ly7E3kZM2nH").addSnapshotListener(EventListener<DocumentSnapshot> { documentSnapshot, e ->
-            if (e != null) {
-                Log.d("ERROR", e.message)
-                return@EventListener
-            }
-            if (documentSnapshot != null && documentSnapshot.exists()) {
-                EventBus.getDefault().post(documentSnapshot.data)
-            }
-        })
+    fun getRequest() { //: ObservableField<ArrayList<DocumentSnapshot>> {
 
+
+        firebase.collection("Request").whereEqualTo("Done", false).get().addOnCompleteListener {
+
+            EventBus.getDefault().post(it.result.documents as? ArrayList<DocumentSnapshot>)
+            //ob.set(it.result.documents as ArrayList<DocumentSnapshot>)
+            //observable = Observable.just(it.result)
+        }
+
+        //return ob
     }
 
-    fun getCurrentRequests() : Map<String, Any> {
-        return firebase.collection("Request").document("I9NQ9Jw58Ly7E3kZM2nH").get().result.data
+    fun completeRequest(id: Int) {
+
     }
 
 }
